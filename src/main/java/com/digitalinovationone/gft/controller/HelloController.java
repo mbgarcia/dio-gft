@@ -9,6 +9,9 @@ public class HelloController {
 	@Value("${app.message}")
 	private String appMessage;
 	
+	@Value("${GFT_USER:UNKNOWN}")
+	private String gftUser;
+	
 	@GetMapping("/")
 	public String hello() {
 		return "Say hello";
@@ -18,4 +21,12 @@ public class HelloController {
 	public String getMessage() {
 		return appMessage;
 	}
+	
+	@GetMapping("/gft/user/")
+	public String getGftUser() {
+		return "This is the user: " + gftUser;
+	}
+
+	
+	
 }
