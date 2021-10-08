@@ -11,20 +11,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.digitalinovationone.gft.dto.JediDto;
 import com.digitalinovationone.gft.model.Jedi;
-import com.digitalinovationone.gft.repository.JediRepository;
+import com.digitalinovationone.gft.service.JediService;
 
 @Controller
 public class JediController {
 	
 	@Autowired
-	JediRepository repository;
+	JediService service;
 	
 	@GetMapping("/jedi")
 	public ModelAndView allJedi() {
 		final ModelAndView modelAndView = new ModelAndView();
 		
-		modelAndView.addObject("allJedi", repository.allJedi());
+		modelAndView.addObject("allJedi", service.getAll());
 		
 		return modelAndView;
 	}
@@ -39,12 +40,12 @@ public class JediController {
 	}
 	
 	@PostMapping("/jedi")
-	public String createJedi(@Valid @ModelAttribute Jedi jedi, BindingResult result, RedirectAttributes redirectAttributes) {
+	public String createJedi(@Valid @ModelAttribute JediDto jedi, BindingResult result, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			return "new-jedi";
 		}
 		
-		repository.add(jedi);
+		service.add(jedi);
 		
 		redirectAttributes.addFlashAttribute("message", "Jedi cadastrado com sucesso");
 		
