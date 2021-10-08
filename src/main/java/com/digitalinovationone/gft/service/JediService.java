@@ -42,16 +42,36 @@ public class JediService {
 		repository.save(jedi);
 	}
 	
-	
-	public JediDto findOneById(Long id) throws BusinessException {
+	public Jedi findById(Long id) throws BusinessException {
 		Optional<Jedi> opt = repository.findById(id);
 		
 		if (opt.isPresent()) {
-			JediDto dto = new JediDto();
-			BeanUtils.copyProperties(opt.get(), dto);
-			return dto;
+			return opt.get();
 		} else {
 			throw new BusinessException("error.notfound.jedi", new Object[] {id});
 		}
+	}
+	
+	public JediDto findOneById(Long id) throws BusinessException {
+		Jedi jedi = findById(id);
+		JediDto dto = new JediDto();
+		BeanUtils.copyProperties(jedi, dto);
+		
+		return dto;
+	}
+
+	@Transactional
+	public void update(Long id, @Valid JediDto dto) throws BusinessException {
+		Jedi jedi = this.findById(id);
+		BeanUtils.copyProperties(dto, jedi);
+		
+		repository.save(jedi);
+	}
+
+	@Transactional
+	public void delete(Long id) throws BusinessException {
+		Jedi jedi = this.findById(id);
+		
+		repository.delete(jedi);
 	}
 }
