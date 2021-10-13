@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.digitalinovationone.gft.dto.JediDto;
+import com.digitalinovationone.gft.dto.JediResponseItemListDto;
 import com.digitalinovationone.gft.exception.BusinessException;
 import com.digitalinovationone.gft.service.JediService;
 
@@ -27,7 +28,7 @@ public class JediRestController extends BaseRestController {
 	JediService service;
 	
 	@GetMapping("/all")
-	public List<JediDto> allJedi() {
+	public List<JediResponseItemListDto> allJedi() throws BusinessException {
 		return service.getAll();
 	}
 	

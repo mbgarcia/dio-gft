@@ -29,6 +29,9 @@ public class Jedi {
 	@Column
 	@NotBlank
 	private String lastName;
+	
+	@Column
+	private String status;
 
 	public Jedi(String name, String lastName) {
 		this.name = name;

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.digitalinovationone.gft.dto.JediDto;
+import com.digitalinovationone.gft.exception.BusinessException;
 import com.digitalinovationone.gft.model.Jedi;
 import com.digitalinovationone.gft.service.JediService;
 
@@ -22,7 +23,7 @@ public class JediController {
 	JediService service;
 	
 	@GetMapping("/jedi")
-	public ModelAndView allJedi() {
+	public ModelAndView allJedi() throws BusinessException {
 		final ModelAndView modelAndView = new ModelAndView();
 		
 		modelAndView.addObject("allJedi", service.getAll());

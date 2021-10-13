@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.digitalinovationone.gft.dto.JediDto;
+import com.digitalinovationone.gft.dto.JediResponseItemListDto;
 import com.digitalinovationone.gft.exception.BusinessException;
+import com.digitalinovationone.gft.hateoas.LinkDetalheJedi;
 import com.digitalinovationone.gft.model.Jedi;
 import com.digitalinovationone.gft.repository.JediRepository;
 
@@ -21,14 +23,15 @@ public class JediService {
 	@Autowired
 	private JediRepository repository;
 	
-	public List<JediDto> getAll() {
+	public List<JediResponseItemListDto> getAll() throws BusinessException {
 		Iterable<Jedi> lista = repository.findAll();
 		
-		List<JediDto> dtos = new ArrayList<>();
+		List<JediResponseItemListDto> dtos = new ArrayList<>();
 		
 		for (Jedi jedi: lista) {
-			JediDto dto = new JediDto();
-			BeanUtils.copyProperties(jedi, dto);
+			JediResponseItemListDto dto = new JediResponseItemListDto(jedi);
+			dto.add(new LinkDetalheJedi(dto).build());
+			
 			dtos.add(dto);
 		}
 		
